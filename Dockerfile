@@ -1,4 +1,4 @@
-FROM python:3.12-slim
+FROM python:3.12-alpine
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
@@ -6,10 +6,10 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /app
 
 # Installation des dépendances système
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    libpq-dev \
-    && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache \
+    build-base \
+    postgresql-dev \
+    && rm -rf /var/cache/apk/*
 
 # Copie requirements et installation
 COPY requirements.txt .
