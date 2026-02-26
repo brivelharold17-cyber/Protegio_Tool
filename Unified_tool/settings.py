@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -37,15 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'protegioTools',
-    'checker',
-    'dashboard',
-    'scanner',
-    'dns_tool',
-    'accounts',
-    'integrations',
-    'intruder',
-    'perforNet',
+    'apps.protegioTools',
+    'apps.checker',
+    'apps.dashboard',
+    'apps.scanner',
+    'apps.intruder',
+    'apps.dns_tool',
+    'apps.accounts',
+    'apps.integrations',
+    'apps.perforNet',
 ]
 
 MIDDLEWARE = [
@@ -124,13 +125,30 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/6.0/howto/static-files/
-
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-#configuration OWASP ZAP
-ZAP_DAEMON_URL = 'http://127.0.0.1:8080'
-ZAP_API_KEY = ''
-ZAP_TIMEOUT = 900
+STATICFILES_DIRS = [BASE_DIR / 'static']
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+# OWASP ZAP Configuration
+ZAP_DAEMON_URL = os.environ.get('ZAP_DAEMON_URL', 'http://127.0.0.1:8080')
+ZAP_API_KEY = os.environ.get('ZAP_API_KEY', '')
+ZAP_TIMEOUT = int(os.environ.get('ZAP_TIMEOUT', '900'))  # 15 minutes par défaut
+
+# Logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
+    },
+}
+DEFAULT_TYPE=int(os.environ.get('DEFAULT_TYPE', '1'))

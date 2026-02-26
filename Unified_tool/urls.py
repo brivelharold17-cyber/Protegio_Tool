@@ -19,22 +19,21 @@ from django.urls import path, include
 from django.views.generic import RedirectView
 from django.conf import settings
 from django.conf.urls.static import static
-from project.ux_views import ux_demo
 
 urlpatterns = [
     path('', RedirectView.as_view(url='dashboard/', permanent=False)),
     path('admin/', admin.site.urls),
-    # path('accounts/', include('accounts.urls')),  # To be implemented later
-    path('dashboard/', include('dashboard.urls')),
-    path('protegioTools/', include('protegioTools.urls')),
-    path('checker/', include('checker.urls')),
-    path('scanner/', include('scanner.urls')),
-    path('intruder/', include('intruder.urls')),
-    path('dns_tool/', include('dns_tool.urls')),
-    path('perforNet/', include('perforNet.urls')),
-    path('integrations/', include('integrations.urls')),
-    path('ux-demo/', ux_demo, name='ux_demo'),
+    path('dashboard/', include('apps.dashboard.urls')),
+    path('protegioTools/', include('apps.protegioTools.urls')),
+    path('checker/', include('apps.checker.urls')),
+    path('scanner/', include('apps.scanner.urls')),
+    path('intruder/', include('apps.intruder.urls')),
+    path('dns_tool/', include('apps.dns_tool.urls')),
+    path('perforNet/', include('apps.perforNet.urls')),
+    path('integrations/', include('apps.integrations.urls')),
 ]
-# Servir les fichiers statiques en développement uniquement
+
+# Servir les fichiers statiques et médias en développement uniquement
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
