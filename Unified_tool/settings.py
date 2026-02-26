@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'apps.accounts',
     'apps.integrations',
     'apps.perforNet',
+    'apps.reports',
 ]
 
 MIDDLEWARE = [

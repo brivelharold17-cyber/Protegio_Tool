@@ -32,6 +32,7 @@ urlpatterns = [
     path('dns_tool/', include('apps.dns_tool.urls')),
     path('perforNet/', include('apps.perforNet.urls')),
     path('integrations/', include('apps.integrations.urls')),
+    path('reports/', include('apps.reports.urls')),
 ]
 
 # Servir les fichiers statiques et médias en développement uniquement
