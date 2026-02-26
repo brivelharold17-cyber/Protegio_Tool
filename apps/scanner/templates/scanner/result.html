@@ -193,6 +193,25 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
 
+      {% if not zap_available %}
+        <div class="alert alert-info alert-dismissible fade show alert-custom shadow-lg d-flex align-items-center mb-4" role="alert">
+          <i class="fas fa-info-circle alert-icon text-info"></i>
+          <div>
+            <strong>Rapport de démonstration</strong><br/>
+            ZAP n'est pas accessible. Ce rapport affiche un exemple de vulnérabilités trouvées pour démonstration. Connectez ZAP pour une analyse en temps réel.
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% elif message %}
+        <div class="alert alert-info alert-dismissible fade show alert-custom shadow-lg d-flex align-items-center mb-4" role="alert">
+          <i class="fas fa-info-circle alert-icon text-info"></i>
+          <div>
+            {{ message }}
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endif %}
+
       <!-- Résumé des risques -->
       <div class="card card-report shadow-xl mb-5">
         <div class="card-header d-flex align-items-center">
