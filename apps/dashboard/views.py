@@ -12,7 +12,7 @@ def dashboard_home(request):
             'icon': 'fa-magnifying-glass',
             'color': 'primary',
             'description': 'Vérifier les informations',
-            'url': '#',
+            'url': '/checker/',
             'stats': 1250
         },
         {
@@ -20,7 +20,7 @@ def dashboard_home(request):
             'icon': 'fa-globe',
             'color': 'info',
             'description': 'Outils DNS avancés',
-            'url': '#',
+            'url': '/dns_tool/',
             'stats': 340
         },
         {
@@ -28,7 +28,7 @@ def dashboard_home(request):
             'icon': 'fa-radar',
             'color': 'danger',
             'description': 'Scanner de vulnérabilités',
-            'url': '#',
+            'url': '/scanner/',
             'stats': 789
         },
         {
@@ -36,7 +36,7 @@ def dashboard_home(request):
             'icon': 'fa-lock',
             'color': 'warning',
             'description': 'Tests de pénétration',
-            'url': '#',
+            'url': '/intruder/',
             'stats': 420
         },
         {
@@ -44,7 +44,7 @@ def dashboard_home(request):
             'icon': 'fa-shield',
             'color': 'success',
             'description': 'Outils de protection',
-            'url': '#',
+            'url': '/protegioTools/',
             'stats': 560
         },
         {
@@ -52,15 +52,15 @@ def dashboard_home(request):
             'icon': 'fa-tachometer-alt',
             'color': 'secondary',
             'description': 'Analyse de performance',
-            'url': '#',
+            'url': '/perforNet/',
             'stats': 210
         },
         {
-            'name': 'Checker Reports',
+            'name': 'Reports',
             'icon': 'fa-file-chart-line',
             'color': 'primary',
             'description': 'Rapports détaillés',
-            'url': '#',
+            'url': '/reports/',
             'stats': 95
         },
         {
@@ -68,7 +68,7 @@ def dashboard_home(request):
             'icon': 'fa-puzzle-piece',
             'color': 'info',
             'description': 'Intégrations externes',
-            'url': '#',
+            'url': '/integrations/',
             'stats': 12
         },
     ]
