@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-+n(4i*qbbpyz!bdbh^e!=op^fx#$cj+@i8@ve6!lw$mcyt(*ho'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*', '173.249.53.53', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -152,3 +152,8 @@ LOGGING = {
     },
 }
 DEFAULT_TYPE=int(os.environ.get('DEFAULT_TYPE', '1'))
+
+# Authentication settings
+LOGIN_URL = 'accounts:login'
+LOGIN_REDIRECT_URL = 'dashboard:dashboard'
+LOGOUT_REDIRECT_URL = 'accounts:login'
