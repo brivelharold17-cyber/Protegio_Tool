@@ -18,10 +18,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copie du projet
 COPY . .
 
-# Collectstatic (pour la prod)
-RUN python manage.py collectstatic --noinput
+# Collectstatic will be run separately in production
+# RUN python manage.py collectstatic --noinput
 
 EXPOSE 8000
 
-# Lance avec Gunicorn (adapte le nom de ton projet !)
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "Unified_tool.wsgi:application"]
+# Lance avec Gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "unified_tool.wsgi:application"]
