@@ -1,0 +1,144 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Dashboard - PROTEGIO{% endblock %}
+
+{% block content %}
+<div class="header-top">
+    <div class="header-title">
+        <h1>Bienvenue, <span style="color: var(--primary);">{{ user.username }}</span>!</h1>
+        <p style="color: var(--secondary); margin-top: 5px;">Dernière connexion: {{ user.last_login|date:"d/m/Y H:i" }}</p>
+    </div>
+    <div class="header-actions">
+        <button class="btn-icon" title="Notifications">
+            <i class="fas fa-bell"></i>
+        </button>
+        <button class="btn-icon" title="Paramètres">
+            <i class="fas fa-sliders-h"></i>
+        </button>
+        <button class="btn-icon" title="Aide">
+            <i class="fas fa-question-circle"></i>
+        </button>
+    </div>
+</div>
+
+<!-- STATISTICS SECTION -->
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon" style="color: var(--primary);">
+            <i class="fas fa-chart-line"></i>
+        </div>
+        <div class="stat-label">Total Scans</div>
+        <div class="stat-value">{{ stats.total_scans }}</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon" style="color: var(--danger);">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <div class="stat-label">Vulnérabilités Détectées</div>
+        <div class="stat-value">{{ stats.vulnerabilities }}</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon" style="color: var(--success);">
+            <i class="fas fa-file-download"></i>
+        </div>
+        <div class="stat-label">Rapports Générés</div>
+        <div class="stat-value">{{ stats.reports_generated }}</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon" style="color: var(--info);">
+            <i class="fas fa-tasks"></i>
+        </div>
+        <div class="stat-label">Tâches Actives</div>
+        <div class="stat-value">{{ stats.active_tasks }}</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon" style="color: var(--warning);">
+            <i class="fas fa-users"></i>
+        </div>
+        <div class="stat-label">Utilisateurs En Ligne</div>
+        <div class="stat-value">{{ stats.users_online }}</div>
+    </div>
+</div>
+
+<!-- APPLICATIONS SECTION -->
+<div class="apps-section">
+    <h2>
+        <i class="fas fa-th"></i>
+        Accès aux Applications
+    </h2>
+</div>
+
+<div class="apps-grid">
+    {% for app in apps_menu %}
+    <div class="app-card {{ app.color }}">
+        <div class="app-icon">
+            <i class="fas {{ app.icon }}"></i>
+        </div>
+        <div class="app-name">{{ app.name }}</div>
+        <div class="app-description">{{ app.description }}</div>
+        <div class="app-stats">
+            <i class="fas fa-chart-bar"></i>
+            <span>{{ app.stats }} utilisations</span>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- QUICK ACTIONS -->
+<div style="margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--border-color);">
+    <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 20px;">
+        <i class="fas fa-lightning-bolt"></i>
+        Actions Rapides
+    </h2>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+        <div class="stat-card" style="text-align: center; cursor: pointer;">
+            <div style="font-size: 32px; color: var(--primary); margin-bottom: 12px;">
+                <i class="fas fa-play"></i>
+            </div>
+            <div style="font-weight: 600; margin-bottom: 8px;">Nouveau Scan</div>
+            <div style="font-size: 12px; color: var(--secondary);">Démarrer un scan rapide</div>
+        </div>
+
+        <div class="stat-card" style="text-align: center; cursor: pointer;">
+            <div style="font-size: 32px; color: var(--success); margin-bottom: 12px;">
+                <i class="fas fa-download"></i>
+            </div>
+            <div style="font-weight: 600; margin-bottom: 8px;">Télécharger Rapport</div>
+            <div style="font-size: 12px; color: var(--secondary);">Exporter les derniers résultats</div>
+        </div>
+
+        <div class="stat-card" style="text-align: center; cursor: pointer;">
+            <div style="font-size: 32px; color: var(--info); margin-bottom: 12px;">
+                <i class="fas fa-settings"></i>
+            </div>
+            <div style="font-weight: 600; margin-bottom: 8px;">Paramètres</div>
+            <div style="font-size: 12px; color: var(--secondary);">Configurer vos préférences</div>
+        </div>
+
+        <div class="stat-card" style="text-align: center; cursor: pointer;">
+            <div style="font-size: 32px; color: var(--warning); margin-bottom: 12px;">
+                <i class="fas fa-help-circle"></i>
+            </div>
+            <div style="font-weight: 600; margin-bottom: 8px;">Documentation</div>
+            <div style="font-size: 12px; color: var(--secondary);">Consulter l'aide en ligne</div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .stat-card[style*="text-align: center"] {
+        transition: all 0.3s ease;
+    }
+
+    .stat-card[style*="text-align: center"]:hover {
+        border-color: var(--primary);
+        box-shadow: 0 12px 32px rgba(88, 166, 255, 0.15);
+        transform: translateY(-4px);
+    }
+</style>
+{% endblock %}
