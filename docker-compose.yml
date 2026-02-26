@@ -14,7 +14,7 @@ services:
   web:
     build: .
     restart: always
-    command: gunicorn --bind 0.0.0.0:8000 Unified_tool.wsgi:application
+    command: gunicorn --bind 0.0.0.0:8000 unified_tool.wsgi:application
     volumes:
       - .:/app
       - static_volume:/app/staticfiles

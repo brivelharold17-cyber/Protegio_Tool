@@ -18,9 +18,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copie du projet
 COPY . .
 
-# Collectstatic will be run separately in production
-# RUN python manage.py collectstatic --noinput
-
 EXPOSE 8000
 
 # Lance avec Gunicorn
