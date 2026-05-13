@@ -42,12 +42,13 @@ INSTALLED_APPS = [
     'apps.checker',
     'apps.dashboard',
     'apps.scanner',
-    'apps.intruder',
     'apps.dns_tool',
     'apps.accounts',
     'apps.integrations',
     'apps.perforNet',
     'apps.reports',
+    'apps.sqlmap',
+    'apps.NIKTO',
 ]
 
 MIDDLEWARE = [
@@ -65,7 +66,10 @@ ROOT_URLCONF = 'unified_tool.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [
+            BASE_DIR / 'templates',
+            BASE_DIR / 'apps' / 'burp-suite' / 'templates',  # ← ajoute cette ligne
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -48,7 +48,7 @@ class HomeView(View):
                 timeout=5
             )
             return response.status_code == 200
-        except:
+        except Exception:
             return False
 
     def generate_mock_report(self, target):

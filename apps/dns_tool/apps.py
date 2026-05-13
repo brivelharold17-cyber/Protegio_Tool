@@ -2,5 +2,5 @@ from django.apps import AppConfig
 
 
 class DnsToolConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
     name = 'apps.dns_tool'
+    default_auto_field = 'django.db.models.BigAutoField'

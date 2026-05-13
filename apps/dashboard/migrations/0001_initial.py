@@ -61,7 +61,7 @@ class Migration(migrations.Migration):
             name='ToolUsage',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('tool_name', models.CharField(choices=[('whois', 'WHOIS & DNS Recon'), ('checker', 'Username/Email Check'), ('dns_tool', 'DNS Tool'), ('scanner', 'OWASP ZAP'), ('intruder', 'Burp Suite'), ('perforNet', 'Speed Test')], max_length=50, unique=True)),
+                ('tool_name', models.CharField(choices=[('whois', 'WHOIS & DNS Recon'), ('checker', 'Username/Email Check'), ('dns_tool', 'DNS Tool'), ('scanner', 'OWASP ZAP'), ('intruder', 'burp_suite Suite'), ('perforNet', 'Speed Test')], max_length=50, unique=True)),
                 ('usage_count', models.IntegerField(default=0)),
                 ('last_used', models.DateTimeField(blank=True, null=True)),
             ],

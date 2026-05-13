@@ -28,11 +28,14 @@ urlpatterns = [
     path('protegioTools/', include('apps.protegioTools.urls')),
     path('checker/', include('apps.checker.urls')),
     path('scanner/', include('apps.scanner.urls')),
-    path('intruder/', include('apps.intruder.urls')),
     path('dns_tool/', include('apps.dns_tool.urls')),
     path('perforNet/', include('apps.perforNet.urls')),
     path('integrations/', include('apps.integrations.urls')),
     path('reports/', include('apps.reports.urls')),
+    path('sqlmap/', include('apps.sqlmap.urls')),
+    path('nikto/', include('apps.NIKTO.urls')),
+    path('NIKTO/', RedirectView.as_view(url='/nikto/', permanent=True)),
+    path('burp-suite/', include(('apps.burp-suite.urls', 'burp_suite'), namespace='burp_suite')),
 ]
 
 # Servir les fichiers statiques et médias en développement uniquement

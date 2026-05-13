@@ -71,6 +71,38 @@ def dashboard_home(request):
             'url': '/integrations/',
             'stats': 12
         },
+        {
+            'name': 'DIG-MX Tool',
+            'icon': 'fa-network-wired',
+            'color': 'danger',
+            'description': 'DNS MX Lookup',
+            'url': '/dig-mx/',
+            'stats': 0
+        },
+        {
+            'name': 'SQLMap Scanner',
+            'icon': 'fa-database',
+            'color': 'danger',
+            'description': 'SQL Injection Scanner',
+            'url': '/sqlmap/',
+            'stats': 0
+        },
+        {
+            'name': 'NIKTO',
+            'icon': 'fa-shield-virus',
+            'color': 'danger',
+            'description': 'Web Server Scanner',
+            'url': '/nikto/',
+            'stats': 0
+        },
+        {
+            'name': 'burp_suite',
+            'icon': 'fa-lock-open',
+            'color': 'danger',
+            'description': 'Web Security Testing',
+            'url': '/burp-suite/',
+            'stats': 0
+        },
     ]
     
     # Statistiques globales
@@ -80,6 +112,14 @@ def dashboard_home(request):
         'reports_generated': 156,
         'active_tasks': 8,
         'users_online': 3,
+        'protegioTools_uses': 42,
+        'checker_uses': 47,
+        'scanner_uses': 111,
+        'dns_tool_uses': 112,
+        'dig_mx_uses': 0,
+        'sqlmap_uses': 0,
+        'nikto_uses': 50,
+        'burp_suite_uses': 34,
     }
     
     context = {

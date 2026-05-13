@@ -26,7 +26,7 @@ class NucleiService:
     @staticmethod
     def _run_mock_scan(scan):
         """Exécuter un scan Nuclei simulé"""
-        scan.status = 'running'
+        scan.status = 'in_progress'
         scan.save()
         
         # Simuler les résultats
@@ -81,7 +81,7 @@ class PortScanService:
     @staticmethod
     def _run_mock_scan(scan):
         """Exécuter un scan de ports simulé"""
-        scan.status = 'scanning'
+        scan.status = 'in_progress'
         scan.save()
         
         # Simuler les résultats des ports ouverts
@@ -153,6 +153,8 @@ class SSLTLSService:
         not_before = datetime.now() - timedelta(days=random.randint(30, 365))
         not_after = datetime.now() + timedelta(days=random.randint(1, 365))
         
+        check.valid_from = not_before
+        check.valid_to = not_after
         check.not_before = not_before
         check.not_after = not_after
         check.serial_number = format(random.getrandbits(128), '032x')
@@ -221,7 +223,7 @@ class APISecurityService:
     @staticmethod
     def _run_mock_test(test):
         """Exécuter un test de sécurité API simulé"""
-        test.status = 'testing'
+        test.status = 'in_progress'
         test.save()
         
         # Simuler les résultats selon le type de test

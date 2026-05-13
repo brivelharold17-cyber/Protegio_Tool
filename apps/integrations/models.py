@@ -12,9 +12,16 @@ class NucleiScan(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     vulnerabilities_found = models.IntegerField(default=0)
     critical_count = models.IntegerField(default=0)
+    high_count = models.IntegerField(default=0)
+    medium_count = models.IntegerField(default=0)
+    low_count = models.IntegerField(default=0)
+    info_count = models.IntegerField(default=0)
+    templates_used = models.IntegerField(default=0)
+    duration = models.IntegerField(default=0)  # En secondes
+    results = models.TextField(blank=True, null=True)
+    results_json = models.JSONField(default=dict, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    results = models.TextField(blank=True, null=True)
 
     class Meta:
         ordering = ['-created_at']
@@ -34,10 +41,15 @@ class PortScan(models.Model):
     target = models.CharField(max_length=255)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     open_ports_count = models.IntegerField(default=0)
+    closed_ports_count = models.IntegerField(default=0)
+    filtered_ports_count = models.IntegerField(default=0)
     host_status = models.CharField(max_length=50, default='unknown')
+    ports_data = models.JSONField(default=dict, blank=True)
+    os_detection = models.CharField(max_length=255, blank=True, null=True)
+    duration = models.IntegerField(default=0)  # En secondes
+    results = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    results = models.TextField(blank=True, null=True)
 
     class Meta:
         ordering = ['-created_at']
@@ -47,15 +59,30 @@ class PortScan(models.Model):
 
 
 class SSLTLSCert(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('checking', 'Checking'),
+        ('completed', 'Completed'),
+        ('failed', 'Failed'),
+    ]
+    
     target = models.CharField(max_length=255)
     port = models.IntegerField(default=443)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     cert_valid = models.BooleanField(default=False)
     ssl_rating = models.CharField(max_length=50, default='unknown')
     common_name = models.CharField(max_length=255, blank=True, null=True)
     issuer = models.CharField(max_length=255, blank=True, null=True)
-    subject_alt_names = models.TextField(blank=True, null=True)
+    subject_alt_names = models.JSONField(default=list, blank=True)
     valid_from = models.DateTimeField(blank=True, null=True)
     valid_to = models.DateTimeField(blank=True, null=True)
+    not_before = models.DateTimeField(blank=True, null=True)  # Alias pour valid_from
+    not_after = models.DateTimeField(blank=True, null=True)  # Alias pour valid_to
+    serial_number = models.CharField(max_length=255, blank=True, null=True)
+    tls_versions = models.JSONField(default=list, blank=True)
+    cipher_suites = models.JSONField(default=list, blank=True)
+    vulnerable_ciphers = models.JSONField(default=list, blank=True)
+    security_issues = models.JSONField(default=list, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -72,6 +99,8 @@ class APISecurityTest(models.Model):
         ('injection', 'Injection'),
         ('xss', 'Cross-Site Scripting'),
         ('cors', 'CORS'),
+        ('rate_limit', 'Rate Limiting'),
+        ('headers', 'Security Headers'),
         ('other', 'Other'),
     ]
     
@@ -88,6 +117,10 @@ class APISecurityTest(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     severity = models.CharField(max_length=50, blank=True, null=True)
     findings = models.TextField(blank=True, null=True)
+    issues_found = models.IntegerField(default=0)
+    test_details = models.JSONField(default=dict, blank=True)
+    recommendations = models.JSONField(default=list, blank=True)
+    duration = models.IntegerField(default=0)  # En secondes
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -114,6 +147,8 @@ class CVELookup(models.Model):
     cvss_score = models.FloatField(blank=True, null=True)
     publication_date = models.DateField(blank=True, null=True)
     affected_software = models.TextField(blank=True, null=True)
+    affected_versions = models.JSONField(default=list, blank=True)
+    references = models.JSONField(default=list, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -134,12 +169,16 @@ class IntegrationResult(models.Model):
     ]
     
     target = models.CharField(max_length=255)
+    nuclei_scan = models.ForeignKey(NucleiScan, on_delete=models.SET_NULL, blank=True, null=True)
+    port_scan = models.ForeignKey(PortScan, on_delete=models.SET_NULL, blank=True, null=True)
+    ssl_check = models.ForeignKey(SSLTLSCert, on_delete=models.SET_NULL, blank=True, null=True)
     risk_level = models.CharField(max_length=20, choices=RISK_LEVEL_CHOICES)
     total_vulnerabilities = models.IntegerField(default=0)
     critical_vulnerabilities = models.IntegerField(default=0)
     high_vulnerabilities = models.IntegerField(default=0)
     medium_vulnerabilities = models.IntegerField(default=0)
     low_vulnerabilities = models.IntegerField(default=0)
+    critical_issues = models.IntegerField(default=0)
     report_generated = models.BooleanField(default=False)
     report_file = models.FileField(upload_to='reports/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
